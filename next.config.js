@@ -4,11 +4,11 @@ const nextConfig = {
   images: {
     domains: ['files.stripe.com'],
   },
-  experimental: {
-    images: {
-      allowFutureImage: true,
-    },
-  },
+  // experimental: {
+  //   images: {
+  //     allowFutureImage: true,
+  //   },
+  // },
 }
 
 module.exports = nextConfig
