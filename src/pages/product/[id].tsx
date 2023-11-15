@@ -9,6 +9,8 @@ import Image from 'next/image'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { stripe } from '../../lib/stripe'
 import Stripe from 'stripe'
+import axios from 'axios'
+import { useState } from 'react'
 
 interface ProduceProps {
   id: string
@@ -26,9 +28,23 @@ export default function Product({
   description,
   priceId,
 }: ProduceProps) {
-  const { isFallback } = useRouter()
+  const [isPaymentSendding, setIsPaymentSendding] = useState<boolean>(false)
 
-  if (isFallback) return <p>Loading...</p>
+  async function handleBuyProduct() {
+    try {
+      setIsPaymentSendding(true)
+      const response = await axios.post('/api/checkout', {
+        priceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+      setIsPaymentSendding(false)
+    } catch (err) {
+      alert('error')
+    }
+  }
 
   return (
     <ProductContainer>
@@ -41,7 +57,9 @@ export default function Product({
 
         <p>{description}</p>
 
-        <button>comprar agora</button>
+        <button disabled={isPaymentSendding} onClick={handleBuyProduct}>
+          comprar agora
+        </button>
       </ProductDetails>
     </ProductContainer>
   )
