@@ -16,6 +16,7 @@ interface ProduceProps {
   imageUrl: string
   price: string
   description: string
+  priceId: string
 }
 
 export default function Product({
@@ -23,6 +24,7 @@ export default function Product({
   name,
   price,
   description,
+  priceId,
 }: ProduceProps) {
   const { isFallback } = useRouter()
 
@@ -67,6 +69,8 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   return {
     props: {
       ...product,
+      imageUrl: product.images[0],
+      priceId: price.id,
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
