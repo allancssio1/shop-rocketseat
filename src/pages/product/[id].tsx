@@ -11,6 +11,7 @@ import { stripe } from '../../lib/stripe'
 import Stripe from 'stripe'
 import axios from 'axios'
 import { useState } from 'react'
+import Head from 'next/head'
 
 interface ProduceProps {
   id: string
@@ -47,21 +48,26 @@ export default function Product({
   }
 
   return (
-    <ProductContainer>
-      <ImageContiner>
-        <Image src={imageUrl} alt="" width={520} height={480} />
-      </ImageContiner>
-      <ProductDetails>
-        <h1>{name}</h1>
-        <span>{price}</span>
+    <>
+      <Head>
+        <title>{name} | Detalhes</title>
+      </Head>
+      <ProductContainer>
+        <ImageContiner>
+          <Image src={imageUrl} alt="" width={520} height={480} />
+        </ImageContiner>
+        <ProductDetails>
+          <h1>{name}</h1>
+          <span>{price}</span>
 
-        <p>{description}</p>
+          <p>{description}</p>
 
-        <button disabled={isPaymentSendding} onClick={handleBuyProduct}>
-          comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+          <button disabled={isPaymentSendding} onClick={handleBuyProduct}>
+            comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   )
 }
 
